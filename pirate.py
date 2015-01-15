@@ -17,28 +17,27 @@ ingredients = {
 }
 
 
-
-def ask_pirate():
-  answer_dict = {}
-  for x in questions:
-    answer = raw_input(questions[x])
-    if (answer == "yes" or answer == "y"):
-      answer_dict[x] = True
-    else:
-      answer_dict[x] = False
-  print answer_dict
-  return answer_dict 
+def find_preferences():
+  preferences = questions
+  for i in questions:
+    preferences[i] = raw_input(questions[i]).lower() in ["y","yes"]
+  print preferences
+  return preferences 
   
 def make_drink(preferences):
-  for i in preferences:
-    if preferences[i] == True:
-      preferences[i] = random.choice(ingredients[i])
   for j in preferences:
-    if preferences[j] != False:
-      print preferences[j]
+    if preferences[j] == True:
+      preferences[j] = random.choice(ingredients[j])
+  print preferences    
   return preferences
   
-
+  
 if __name__ == '__main__':
-  make_drink(ask_pirate())
+  preferences = find_preferences()
+  drink = make_drink(preferences)
+  print "Here's your ingredients:"
+  for component in drink:
+    if drink[component]:
+      print "A {}".format(drink[component])
+  
   
